@@ -14,6 +14,11 @@ import static ru.netology.data.DataGenerator.*;
 
 public class FormTest {
 
+    public String city = getCity();
+    public String phone = getPhone();
+    public String name = getName();
+    public String newDate = newDate();
+
     @Test
     void shouldSubmitCorrectForm() {
         open("http://localhost:9999/");
@@ -32,6 +37,34 @@ public class FormTest {
         open("http://localhost:9999/");
         $("[class='button__text']").click();
         $(byText("Поле обязательно для заполнения")).waitUntil(Condition.visible, 15000);
+    }
+
+    @Nested
+    @DisplayName("Test new functions")
+    class NewFunctions {
+        @Test
+        void shouldSubmitCorrectForm() {
+            open("http://localhost:9999/");
+            $("[type='text'][placeholder]").setValue(city);
+            $("[class='input__control'][type='tel'][placeholder]").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+            $("[class='input__control'][type='tel'][placeholder]").setValue(date());
+            $("[name='name']").setValue(name);
+            $("[name='phone']").setValue(phone);
+            $("[data-test-id='agreement']").click();
+            $("[class='button__text']").click();
+            $(byText("Успешно!")).waitUntil(Condition.visible, 15000);
+            $("[type='text'][placeholder]").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+            $("[type='text'][placeholder]").setValue(city);
+            $("[class='input__control'][type='tel'][placeholder]").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+            $("[class='input__control'][type='tel'][placeholder]").setValue(newDate);
+            $("[name='name']").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+            $("[name='name']").setValue(name);
+            $("[name='phone']").sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.DELETE));
+            $("[name='phone']").setValue(phone);
+            $("[class='button__text']").click();
+            $(byText("Перепланировать")).click();
+            $(byText("Успешно!")).waitUntil(Condition.visible, 15000);
+        }
     }
 
     @Nested

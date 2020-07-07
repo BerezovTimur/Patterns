@@ -36,4 +36,12 @@ public class DataGenerator {
         date.format(formatter);
         return date.format(formatter);
     }
+
+    public static String newDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate today = LocalDate.now();
+        LocalDate date = today.plusDays(5);
+        date.format(formatter);
+        return date.format(formatter);
+    }
 }
